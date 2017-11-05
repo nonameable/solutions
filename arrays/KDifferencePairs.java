@@ -65,6 +65,69 @@ public class KDifferencePairs {
 	}
 
 
+	// uses binary search to find the pairs. IT STILL DOES NOT CHECK FOR IDENTIC PAIRS.
+	public ArrayList<Pair> getKDifferencePairsOptimizedv2 (int[] list, int k) {
+		ArrayList<Pair> pairs = new ArrayList<Pair>();
+		Arrays.sort(list);
+
+		for(int i = 0; i < list.length; i++){
+			int indexLess = binarySearchIterative(list, list[i] - k);
+			if(indexLess >= 0){
+				Pair newPair = new Pair(list[i], list[indexLess]);
+					pairs.add(newPair);
+			}
+
+			int indexMore = binarySearchIterative(list, list[i] + k);
+			if(indexMore >= 0){
+				Pair newPair = new Pair(list[i], list[indexMore]);
+					pairs.add(newPair);
+			}
+		}
+
+		return pairs;
+	}
+
+	// uses a hast table to 
+	public ArrayList<Pair> getKDifferencePairsOptimizedv3 (int[] list, int k) {
+		ArrayList<Pair> pairs = new ArrayList<Pair>();
+
+
+		for(int i = 0; i < list.length; i++){
+			
+		}
+
+		return pairs;
+	}
+
+
+	public int binarySearchIterative(int[] array, int n) {
+		int index = -1;
+		// should consider empty list, list with just 1, 2 elements
+		// should consider odd list, even list
+		// should consider list with non-disctict integers
+		int start = 0;
+		int end = array.length - 1;
+		boolean found = false;
+		while( !(end < start) && !(start > end) && !found) {
+			int mid = (start + end) / 2;
+			if( n == array[mid]){
+				index = mid;
+				found = true;
+			}
+			else if (n < array[mid]) {
+				end = mid - 1;
+			}
+			else {
+				start = mid + 1;
+			}
+		}
+
+		return index;
+	}
+
+
+
+
 
 	public static void main(String[] args) {
 
@@ -73,15 +136,24 @@ public class KDifferencePairs {
 		KDifferencePairs kdp = new KDifferencePairs();
 		ArrayList<Pair> pairs = kdp.getKDifferencePairs(list, 6);
 		ArrayList<Pair> pairsOptimizedv1 = kdp.getKDifferencePairsOptimizedv1(list, 6);
+		ArrayList<Pair> pairsOptimizedv2 = kdp.getKDifferencePairsOptimizedv2(list, 6);
 
 		for (int i = 0; i < pairs.size() ;i++ ) {
 			System.out.println(pairs.get(i).toString());
 		}
 
-		System.out.println("---------- optimized v1-------------");
+		System.out.println("---------- optimized v1 -------------");
  
 		for (int i = 0; i < pairsOptimizedv1.size() ;i++ ) {
 			System.out.println(pairsOptimizedv1.get(i).toString());
 		}
+
+		System.out.println("---------- optimized Binary Search -------------");
+
+		for (int i = 0; i < pairsOptimizedv2.size() ;i++ ) {
+			System.out.println(pairsOptimizedv2.get(i).toString());
+		}
+
+		System.out.println("---------- optimized Hash Tables -------------");
 	}
 }
