@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Hashtable;
 
 public class KDifferencePairs {
 
@@ -87,14 +88,31 @@ public class KDifferencePairs {
 		return pairs;
 	}
 
-	// uses a hast table to 
+	// uses a hast table to search for pairs. AGAIN, IT DOES NOT CHECK FOR DUPLICATES
 	public ArrayList<Pair> getKDifferencePairsOptimizedv3 (int[] list, int k) {
 		ArrayList<Pair> pairs = new ArrayList<Pair>();
+		Hashtable<Integer, Integer> ht = new Hashtable<Integer, Integer>();
 
 
 		for(int i = 0; i < list.length; i++){
-			
+			ht.put(list[i], list[i]);
 		}
+
+		for(int i = 0; i < list.length; i++){
+			Integer less = ht.get(list[i] - k);
+			if(less != null) {
+				Pair newPair = new Pair(list[i], less);
+					pairs.add(newPair);
+			}
+
+			Integer more = ht.get(list[i] + k);
+			if(more != null) {
+				Pair newPair = new Pair(list[i], more);
+					pairs.add(newPair);
+			}
+		}
+
+
 
 		return pairs;
 	}
@@ -137,6 +155,7 @@ public class KDifferencePairs {
 		ArrayList<Pair> pairs = kdp.getKDifferencePairs(list, 6);
 		ArrayList<Pair> pairsOptimizedv1 = kdp.getKDifferencePairsOptimizedv1(list, 6);
 		ArrayList<Pair> pairsOptimizedv2 = kdp.getKDifferencePairsOptimizedv2(list, 6);
+		ArrayList<Pair> pairsOptimizedv3 = kdp.getKDifferencePairsOptimizedv3(list, 6);
 
 		for (int i = 0; i < pairs.size() ;i++ ) {
 			System.out.println(pairs.get(i).toString());
@@ -155,5 +174,8 @@ public class KDifferencePairs {
 		}
 
 		System.out.println("---------- optimized Hash Tables -------------");
+		for (int i = 0; i < pairsOptimizedv3.size() ;i++ ) {
+			System.out.println(pairsOptimizedv3.get(i).toString());
+		}
 	}
 }
