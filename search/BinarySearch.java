@@ -30,9 +30,27 @@ public class BinarySearch {
 		return index;
 	}
 
-	public int BinarySearchRecursive(int[] array, int n) {
-		return -1;
+	public int binarySearchRecursive(int[] array, int n) {
+		return binarySearchRecursiveHelper(array, 0, array.length - 1, n);
+	}
 
+	private int binarySearchRecursiveHelper(int [] array, int start, int end, int n){
+		int mid = (start + end) / 2;
+		if((end < start) || (start > end)){
+			return -1;
+		}
+		else {
+			if(n == array[mid]){
+				return mid;
+			}
+			else if (n < array[mid]){
+				return binarySearchRecursiveHelper(array, start, mid - 1, n);
+			}
+			else {
+				return binarySearchRecursiveHelper(array, mid + 1, end, n);
+			}
+		}
+		
 	}
 
 
@@ -63,5 +81,32 @@ public class BinarySearch {
 		int index4 = bs.binarySearchIterative(array4, 1);
 		System.out.println("Index is: " + index4);
 		
+		System.out.println("---------------- RECURSIVE -----------------------");
+
+		System.out.println("Testing normal array with disctint numbers");
+		int[] array5 = {18, 2, 3, 16, 8, 1, 12, 21, 7, 13, 67};
+		Arrays.sort(array5);
+		int index5 = bs.binarySearchIterative(array5, 3);
+		System.out.println("Index is: " + index5);
+
+		System.out.println("Testing normal array with non-disctict numbers");
+		int[] array6 = {18, 2, 3, 16, 18, 1, 2, 21, 7, 3, 67};
+		Arrays.sort(array6);
+		int index6 = bs.binarySearchIterative(array6, 18);
+		System.out.println("Index is: " + index6);
+
+		System.out.println("Testing 1 element array");
+		int[] array7 = {18};
+		Arrays.sort(array7);
+		int index7 = bs.binarySearchIterative(array7, 18);
+		System.out.println("Index is: " + index7);
+
+		System.out.println("Testing 1 element array for non-existent value");
+		int[] array8 = {18};
+		Arrays.sort(array8);
+		int index8 = bs.binarySearchIterative(array8, 1);
+		System.out.println("Index is: " + index8);
+
+
 	}
 }
